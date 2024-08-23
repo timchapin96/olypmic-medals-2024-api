@@ -42,6 +42,9 @@ docker-compose run rails rails db:seed
 ### Base URL
 `http://0.0.0.0:3000/countries`
 
+Sortable types:
+  rank, country, country_code, gold, silver, bronze, total
+
 ---
 
 ### Endpoints
@@ -73,7 +76,7 @@ docker-compose run rails rails db:seed
   - `field` (String): The field to sort by.
 - **Example Request**:
   ```http
-  GET http://0.0.0.0:3000/countries?sort_by=name
+  GET http://0.0.0.0:3000/countries?sort_by=country
   ```
 
 #### 4. Limit Results
