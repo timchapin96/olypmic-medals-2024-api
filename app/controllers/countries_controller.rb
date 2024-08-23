@@ -2,7 +2,6 @@ class CountriesController < ApplicationController
   def index
     #Handle req for all countries
     @countries = Country.all
-    puts Country.by_country_code('US').to_sql
 
 
     # Handle medal_type separately with count
@@ -21,6 +20,6 @@ class CountriesController < ApplicationController
   private
 
   def filtering_params
-    params.slice(:rank, :medal_type, :count, :sort_by, :order)
+    params.slice(:ranks, :medal_type, :count, :sort_by, :order, :country_codes, :limit)
   end
 end
