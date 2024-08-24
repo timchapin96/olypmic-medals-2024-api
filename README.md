@@ -20,7 +20,7 @@ This is a practice API I made using Rails. Please see the below documentation.
 
 #### 1. Clone the repository
 ```bash
-git clone git@github.com:timchapin96/olypmic-medals-2024-api.git
+git clone https://github.com/timchapin96/olypmic-medals-2024-api.git
 ```
 
 #### 3. cd into the main directory
