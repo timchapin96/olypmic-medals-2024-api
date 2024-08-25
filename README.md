@@ -23,7 +23,7 @@ This is a practice API I made using Rails. Please see the below documentation.
 git clone https://github.com/timchapin96/olypmic-medals-2024-api.git
 ```
 
-#### 3. cd into the main directory
+#### 2. cd into the main directory
 
 #### 3. Run the Docker containers
 ```bash
@@ -149,4 +149,4 @@ Sortable types:
 | Ivory Coast      | CIV          | Refugee Olympic Team | EOR      |
 | Peru             | PER          | Qatar             | QAT          |
 | Singapore        | SIN          | Slovakia          | SVK          |
-| Zambia           | ZAM          |                   |              |
+| Zambia           | ZAM          
