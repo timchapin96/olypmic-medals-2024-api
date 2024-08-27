@@ -8,31 +8,18 @@ class CountryOlympicMedal < ApplicationRecord
   #TODO
   #Figure out a more elegent way to include order scope into the other
 
-
-  # These two are not RESTful
-  # #SELECT * FROM countries WHERE country_code IN (["country_code"], ......)
-  # scope :by_country_codes, ->(country_codes) do
-  #   if country_codes.is_a?(String)
-  #     country_codes = JSON.parse(country_codes)
-  #   end
-  #   where(country_code: country_codes)
-  # end
-
-  # #SELECT * FROM countries WHERE rank = params[rank]
-  # scope :by_ranks, ->(ranks) do
-  #   if ranks.is_a?(String)
-  #     ranks = JSON.parse(ranks)
-  #   end
-  #   where(rank: ranks)
-  # end
-
-  #SELECT * FROM countries ORDER BY params[field]
+  #SELECT * FROM country_olympic_medal WHERE country_code = country_codes
+  scope :by_country_codes, -> (country_codes) {where(country_code: country_codes.split(','))}
+  #SELECT * FROM country_olympic_medal ORDER BY params[field]
   scope :by_sort_by, -> (field) { order(field) }
-  #SELECT * FROM countries ORDER BY created_at
-  scope :by_order, -> (direction) { order(created_at: direction) }
-  #SELECT * FROM countries LIMIT = params[limit]
+  #SELECT * FROM country_olympic_medal LIMIT = params[limit]
   scope :by_limit, -> (limit) { limit(limit)}
 
-  #SELECT * FROM countries WHERE medal_type >= count
-  scope :by_medal_type, ->(medal_type, count) { where("#{medal_type} >= ?", count) }
+  #SELECT * FROM country_olympic_medal WHERE medal_type >= count and <= count
+  scope :by_min_medal_count_of_type, ->(medal_type, greater_than) { where("#{medal_type} > ?", greater_than) }
+  scope :by_max_medal_count_of_type, ->(medal_type, less_than) { where("#{medal_type} < ?", less_than) }
+  #SELECT * FROM country_olypmic_medal WHERE total >= count and =< count
+  scope :by_min_total_medal_count, ->(medal_total, greater_than) { where("#{medal_total} > ?", greater_than) }
+  scope :by_max_total_medal_count, ->(medal_total, less_than) { where("#{medal_total} < ?", less_than) }
+
 end
