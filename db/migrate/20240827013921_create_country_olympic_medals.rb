@@ -1,6 +1,6 @@
-class CreateCountries < ActiveRecord::Migration[7.0]
+class CreateCountryOlympicMedals < ActiveRecord::Migration[7.0]
   def change
-    create_table :countries do |t|
+    create_table :country_olympic_medals do |t|
       t.integer :rank
       t.string :country
       t.string :country_code
@@ -11,6 +11,6 @@ class CreateCountries < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
-    add_index :countries, :country_code
+    add_index :country_olympic_medals, :country_code
   end
 end

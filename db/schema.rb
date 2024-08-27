@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_16_071302) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_27_013921) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "countries", force: :cascade do |t|
+  create_table "country_olympic_medals", force: :cascade do |t|
     t.integer "rank"
     t.string "country"
     t.string "country_code"
@@ -24,7 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_16_071302) do
     t.integer "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["country_code"], name: "index_countries_on_country_code"
+    t.index ["country_code"], name: "index_country_olympic_medals_on_country_code"
   end
 
 end
