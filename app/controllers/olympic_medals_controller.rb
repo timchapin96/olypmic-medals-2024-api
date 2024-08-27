@@ -1,20 +1,20 @@
-class CountriesController < ApplicationController
+class OlympicMedalsController < ApplicationController
   def index
     #Handle req for all countries
-    @countries = Country.all
+    @medals = CountryOlympicMedal.all
 
 
     # Handle medal_type separately with count
     if params[:medal_type].present? && params[:count].present?
-      @countries = @countries.by_medal_type(params[:medal_type], params[:count])
+      @medals = @medals.by_medal_type(params[:medal_type], params[:count])
     end
 
     # Apply other filters
     filtering_params.except(:medal_type, :count).each do |key, value|
-      @countries = @countries.public_send("by_#{key}", value) if value.present?
+      @medals = @medals.public_send("by_#{key}", value) if value.present?
     end
 
-    render json: @countries
+    render json: @medals
   end
 
   private
