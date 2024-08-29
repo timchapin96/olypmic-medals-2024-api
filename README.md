@@ -109,7 +109,7 @@ Sortable fields include:
 - **Example Requests**:
   ```http
   GET http://0.0.0.0:3000/olympic_medals?medal_type=gold&greater_than=5&less_than=10
-  GET http://0.0.0.0:3000/olympic_medals?medal_type=gold&&less_than=10
+  GET http://0.0.0.0:3000/olympic_medals?medal_type=gold&less_than=10
   GET http://0.0.0.0:3000/olympic_medals?medal_type=gold&greater_than=5
   ```
 
