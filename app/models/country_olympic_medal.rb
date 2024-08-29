@@ -15,11 +15,18 @@ class CountryOlympicMedal < ApplicationRecord
   #SELECT * FROM country_olympic_medal LIMIT = params[limit]
   scope :by_limit, -> (limit) { limit(limit)}
 
-  #SELECT * FROM country_olympic_medal WHERE medal_type >= count and <= count
-  scope :by_min_medal_count_of_type, ->(medal_type, greater_than) { where("#{medal_type} > ?", greater_than) }
-  scope :by_max_medal_count_of_type, ->(medal_type, less_than) { where("#{medal_type} < ?", less_than) }
-  #SELECT * FROM country_olypmic_medal WHERE total >= count and =< count
-  scope :by_min_total_medal_count, ->(medal_total, greater_than) { where("#{medal_total} > ?", greater_than) }
-  scope :by_max_total_medal_count, ->(medal_total, less_than) { where("#{medal_total} < ?", less_than) }
+  #SELECT * FROM country_olympic_medal WHERE medal_type > count and < count
+  scope :by_min_medal_count_of_type, -> (medal_type, greater_than) { where("#{medal_type} > ?", greater_than) }
+  scope :by_max_medal_count_of_type, -> (medal_type, less_than) { where("#{medal_type} < ?", less_than) }
+  scope :by_between_medal_count_of_type, -> (medal_type, greater_than, less_than) {
+      where("#{medal_type} BETWEEN ? AND ?", greater_than, less_than)
+  }
+
+  #SELECT * FROM country_olypmic_medal WHERE total > count and < count
+  scope :by_min_total_medal_count, -> (medal_total_min) { where("total >= ?", medal_total_min) }
+  scope :by_max_total_medal_count, -> (medal_total_max) { where("total <= ?", medal_total_max) }
+  scope :by_between_total_medal_count, -> (medal_total_min, medal_total_max) {
+    where("total BETWEEN ? AND ?", medal_total_min, medal_total_max)
+  }
 
 end
