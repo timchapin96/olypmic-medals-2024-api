@@ -1,26 +1,38 @@
 class OlympicMedalsController < ApplicationController
+
   def index
+    begin
+      sanitizer = ParameterSanitizer.new(filtering_params.to_h)
+      sanitized_params = sanitizer.sanitized_params
+    rescue ParameterSanitizer::SanitizationError => e
+      render json: { error: "#{filtering_params} are #{e.message}"}, status: :bad_request
+      return
+    rescue StandardError => e
+      render json: { error: 'Internal Server Error' }, status: :internal_server_error
+      return
+    end
+
     #Handle req for all countries
     @CountryOlympicMedals = CountryOlympicMedal.all
 
     # Handle medal_type separately with count
-    if params[:medal_type].present? && params[:greater_than].present?
-      @CountryOlympicMedals = @CountryOlympicMedals.by_min_medal_count_of_type(params[:medal_type], params[:greater_than].to_i)
-    elsif params[:medal_type].present? && params[:less_than].present?
-      @CountryOlympicMedals = @CountryOlympicMedals.by_max_medal_count_of_type(params[:medal_type], params[:less_than].to_i)
-    elsif params[:medal_type].present? && params[:less_than].present? && params[:greater_than].present?
-      @CountryOlympicMedals = @CountryOlympicMedals.by_between_medal_count_of_type(params[:medal_type], params[:greater_than].to_i, params[:less_than].to_i)
+    if sanitized_params[:medal_type].present? && sanitized_params[:greater_than].present?
+      @CountryOlympicMedals = @CountryOlympicMedals.by_min_medal_count_of_type(sanitized_params[:medal_type], sanitized_params[:greater_than])
+    elsif sanitized_params[:medal_type].present? && sanitized_params[:less_than].present?
+      @CountryOlympicMedals = @CountryOlympicMedals.by_max_medal_count_of_type(sanitized_params[:medal_type], sanitized_params[:less_than])
+    elsif sanitized_params[:medal_type].present? && sanitized_params[:less_than].present? && sanitized_params[:greater_than].present?
+      @CountryOlympicMedals = @CountryOlympicMedals.by_between_medal_count_of_type(sanitized_params[:medal_type], sanitized_params[:greater_than], sanitized_params[:less_than])
     end
 
     #Handle medal_total param query
-    if params[:medal_total_min].present?
-      @CountryOlympicMedals = @CountryOlympicMedals.by_min_total_medal_count(params[:medal_total_min].to_i)
+    if sanitized_params[:medal_total_min].present?
+      @CountryOlympicMedals = @CountryOlympicMedals.by_min_total_medal_count(sanitized_params[:medal_total_min])
     end
-    if params[:medal_total_max].present?
-      @CountryOlympicMedals = @CountryOlympicMedals.by_max_total_medal_count(params[:medal_total_max].to_i)
+    if sanitized_params[:medal_total_max].present?
+      @CountryOlympicMedals = @CountryOlympicMedals.by_max_total_medal_count(sanitized_params[:medal_total_max])
     end
-    if params[:medal_total_min].present? && params[:medal_total_max].present?
-      @CountryOlympicMedals = @CountryOlympicMedals.by_between_total_medal_count(params[:medal_total_min].to_i, params[:medal_total_max].to_i)
+    if sanitized_params[:medal_total_min].present? && sanitized_params[:medal_total_max].present?
+      @CountryOlympicMedals = @CountryOlympicMedals.by_between_total_medal_count(sanitized_params[:medal_total_min], sanitized_params[:medal_total_max])
     end
 
     # Apply other filters
@@ -34,7 +46,7 @@ class OlympicMedalsController < ApplicationController
   private
 
   def filtering_params
-    params.slice(
+    params.permit(
       :ranks,
       :medal_type,
       :greater_than,
