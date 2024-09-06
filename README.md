@@ -124,7 +124,7 @@ Sortable fields include:
   ```http
   GET http://0.0.0.0:3000/olympic_medals?medal_total_min=25&medal_total_max=35
   GET http://0.0.0.0:3000/olympic_medals?medal_total_max=35
-  GET http://0.0.0.0:3000/olympic_medals?medal_total_min=25
+  GET http://0.0.0.0:3000/olympic_medals?medal_total_min=25gh
   ```
 
 ---
